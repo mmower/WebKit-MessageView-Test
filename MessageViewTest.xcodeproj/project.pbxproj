@@ -7,28 +7,36 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C956F0CF14EACD4D00D1F4B0 /* XKTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = C956F0CE14EACD4D00D1F4B0 /* XKTableRowView.m */; };
 		C9FA727F14E9BB8800F8F872 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FA727E14E9BB8800F8F872 /* Cocoa.framework */; };
 		C9FA728914E9BB8800F8F872 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9FA728714E9BB8800F8F872 /* InfoPlist.strings */; };
 		C9FA728B14E9BB8800F8F872 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FA728A14E9BB8800F8F872 /* main.m */; };
 		C9FA728F14E9BB8800F8F872 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C9FA728D14E9BB8800F8F872 /* Credits.rtf */; };
 		C9FA729214E9BB8800F8F872 /* XKAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FA729114E9BB8800F8F872 /* XKAppDelegate.m */; };
 		C9FA729514E9BB8800F8F872 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9FA729314E9BB8800F8F872 /* MainMenu.xib */; };
+		C9FA729C14E9BC3400F8F872 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FA729B14E9BC3400F8F872 /* WebKit.framework */; };
+		C9FA729F14E9BC8D00F8F872 /* XKMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FA729E14E9BC8D00F8F872 /* XKMessageView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C956F0CD14EACD4D00D1F4B0 /* XKTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKTableRowView.h; sourceTree = "<group>"; };
+		C956F0CE14EACD4D00D1F4B0 /* XKTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKTableRowView.m; sourceTree = "<group>"; };
 		C9FA727A14E9BB8800F8F872 /* MessageViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MessageViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FA727E14E9BB8800F8F872 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C9FA728114E9BB8800F8F872 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		C9FA728214E9BB8800F8F872 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		C9FA728314E9BB8800F8F872 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		C9FA728614E9BB8800F8F872 /* MessageViewTest-Info.plist */ = {isa = PBXFileReference; path = "MessageViewTest-Info.plist"; sourceTree = "<group>"; };
+		C9FA728614E9BB8800F8F872 /* MessageViewTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MessageViewTest-Info.plist"; sourceTree = "<group>"; };
 		C9FA728814E9BB8800F8F872 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C9FA728A14E9BB8800F8F872 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		C9FA728C14E9BB8800F8F872 /* MessageViewTest-Prefix.pch */ = {isa = PBXFileReference; path = "MessageViewTest-Prefix.pch"; sourceTree = "<group>"; };
+		C9FA728C14E9BB8800F8F872 /* MessageViewTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MessageViewTest-Prefix.pch"; sourceTree = "<group>"; };
 		C9FA728E14E9BB8800F8F872 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
-		C9FA729014E9BB8800F8F872 /* XKAppDelegate.h */ = {isa = PBXFileReference; path = XKAppDelegate.h; sourceTree = "<group>"; };
+		C9FA729014E9BB8800F8F872 /* XKAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XKAppDelegate.h; sourceTree = "<group>"; };
 		C9FA729114E9BB8800F8F872 /* XKAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XKAppDelegate.m; sourceTree = "<group>"; };
 		C9FA729414E9BB8800F8F872 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C9FA729B14E9BC3400F8F872 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		C9FA729D14E9BC8D00F8F872 /* XKMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKMessageView.h; sourceTree = "<group>"; };
+		C9FA729E14E9BC8D00F8F872 /* XKMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKMessageView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9FA729C14E9BC3400F8F872 /* WebKit.framework in Frameworks */,
 				C9FA727F14E9BB8800F8F872 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,6 +55,7 @@
 		C9FA726F14E9BB8800F8F872 = {
 			isa = PBXGroup;
 			children = (
+				C9FA729B14E9BC3400F8F872 /* WebKit.framework */,
 				C9FA728414E9BB8800F8F872 /* MessageViewTest */,
 				C9FA727D14E9BB8800F8F872 /* Frameworks */,
 				C9FA727B14E9BB8800F8F872 /* Products */,
@@ -86,6 +96,10 @@
 				C9FA729114E9BB8800F8F872 /* XKAppDelegate.m */,
 				C9FA729314E9BB8800F8F872 /* MainMenu.xib */,
 				C9FA728514E9BB8800F8F872 /* Supporting Files */,
+				C9FA729D14E9BC8D00F8F872 /* XKMessageView.h */,
+				C9FA729E14E9BC8D00F8F872 /* XKMessageView.m */,
+				C956F0CD14EACD4D00D1F4B0 /* XKTableRowView.h */,
+				C956F0CE14EACD4D00D1F4B0 /* XKTableRowView.m */,
 			);
 			path = MessageViewTest;
 			sourceTree = "<group>";
@@ -167,6 +181,8 @@
 			files = (
 				C9FA728B14E9BB8800F8F872 /* main.m in Sources */,
 				C9FA729214E9BB8800F8F872 /* XKAppDelegate.m in Sources */,
+				C9FA729F14E9BC8D00F8F872 /* XKMessageView.m in Sources */,
+				C956F0CF14EACD4D00D1F4B0 /* XKTableRowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +304,7 @@
 				C9FA729A14E9BB8800F8F872 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

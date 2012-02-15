@@ -8,8 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface XKAppDelegate : NSObject <NSApplicationDelegate>
+@interface XKAppDelegate : NSObject <NSApplicationDelegate> {
+  NSInteger _previousSelectedRow;
+}
 
 @property (assign) IBOutlet NSWindow *window;
+
+@property (assign) IBOutlet NSTableView *tableView;
 
 @end
