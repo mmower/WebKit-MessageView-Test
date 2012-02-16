@@ -24,6 +24,22 @@
   
 }
 
+- (void)awakeFromNib {
+  NSMutableArray *list = [NSMutableArray array];
+  for( int i = 0; i < 100; i++ ) {
+    NSInteger paras = 1 + random() % 32;
+    NSMutableString *markup = [NSMutableString stringWithFormat:@"<html>\n<body><div id='container'>\n<h1>Row %d, Paras = %ld</h1>\n",i,paras];
+    while( paras-- > 0 ) {
+      [markup appendFormat:@"<p>Hello from para %ld</p>\n",paras];
+    }
+    [markup appendFormat:@"</div></body>\n</html>\n"];
+    [list addObject:markup];
+  }
+  _data = list;
+  
+  [self performSelector:@selector(revalidateTableRowHeights) withObject:nil afterDelay:0];
+}
+
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -31,22 +47,13 @@
 
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-  return 100;
+  return [_data count];
 }
 
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
   XKMessageView *view = [tableView makeViewWithIdentifier:@"MessageCell" owner:self];
-  
-  NSInteger paras = 1 + random() % 32;
-  NSMutableString *markup = [NSMutableString stringWithFormat:@"<html>\n<body>\n<h1>Paras = %ld</h1>\n",paras];
-  while( paras-- > 0 ) {
-    [markup appendFormat:@"<p>Hello from para %ld</p>\n",paras];
-  }
-  [markup appendFormat:@"</body>\n</html>\n"];
-  
-  [[[view webView] mainFrame] loadHTMLString:markup baseURL:[NSURL URLWithString:@"http://127.0.0.1/"]];
-  
+  [[[view webView] mainFrame] loadHTMLString:[_data objectAtIndex:row] baseURL:[NSURL URLWithString:@"http://127.0.0.1/"]];
   return view;
 }
 
@@ -71,24 +78,43 @@
     if( messageView ) {
       height = MAX( height, [messageView desiredHeight] );
     } else {
-      NSLog( @"Cannot obtain webframe to calculate document height" );
+//      NSLog( @"no message view for row %ld", row );
     }
   }
   
-//  NSLog( @"Height = %g", height );
+  NSLog( @"Height of row %ld = %g", row, height );
   
   return height;
 }
 
 
 - (void)windowResized:(NSNotification *)notification {
-  if( [[self tableView] selectedRow] >= 0 ) {
-    if( [notification object] == [self window] ) {
-      XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:[[self tableView] selectedRow] makeIfNecessary:NO];
-      [messageView updateDesiredHeightOfWebView];
-      [[self tableView] noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:[[self tableView] selectedRow]]];
-    }
-  }
+  [self revalidateTableRowHeights];
+//  NSMutableIndexSet *updatedIndices = [NSMutableIndexSet indexSet];
+//  [[self tableView] enumerateAvailableRowViewsUsingBlock:^(NSTableRowView *rowView, NSInteger row) {
+//    XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:row makeIfNecessary:NO];
+//    [messageView updateDesiredHeightOfWebView];
+//    [updatedIndices addIndex:row];
+//  }];
+//  [[self tableView] noteHeightOfRowsWithIndexesChanged:updatedIndices];
+//  
+//  if( [[self tableView] selectedRow] >= 0 ) {
+//    if( [notification object] == [self window] ) {
+//      XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:[[self tableView] selectedRow] makeIfNecessary:NO];
+//      [messageView updateDesiredHeightOfWebView];
+//    }
+//  }
+}
+
+
+- (void)revalidateTableRowHeights {
+  NSMutableIndexSet *updatedIndices = [NSMutableIndexSet indexSet];
+  [[self tableView] enumerateAvailableRowViewsUsingBlock:^(NSTableRowView *rowView, NSInteger row) {
+    XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:row makeIfNecessary:NO];
+    [messageView updateDesiredHeightOfWebView];
+    [updatedIndices addIndex:row];
+  }];
+  [[self tableView] noteHeightOfRowsWithIndexesChanged:updatedIndices];
 }
 
 

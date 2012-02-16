@@ -38,31 +38,14 @@
   WebFrame *mainFrame = [[self webView] mainFrame];
   DOMDocument *document = [mainFrame DOMDocument];
   
-  DOMNodeList *nodes = [document getElementsByTagName:@"body"];
-  DOMNode *body = [nodes item:0];
-  DOMHTMLBodyElement *bodyElement = (DOMHTMLBodyElement *)body;
+  DOMElement *container = [document getElementById:@"container"];
+  assert( container );
   
-  CGFloat contentHeight = [bodyElement offsetHeight];
-  contentHeight -= 1;
+  CGFloat contentHeight = [container offsetHeight] + 32;
   NSLog( @"contentHeight = %g", contentHeight );
   
   [self setDesiredHeight:contentHeight+NSHeight( [[self controlView] frame] )];
 }
-
-
-//- (void)viewDidMoveToWindow {
-//  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowResized:) name:NSWindowDidResizeNotification object:[self window]];
-//}
-//
-//
-//- (void)dealloc {
-//  [[NSNotificationCenter defaultCenter] removeObserver:self];
-//}
-//
-//
-//- (void)windowResized:(NSNotification *)notification {
-//  [self updateDesiredHeightForWebView:[self webView] webFrame:[[self webView] mainFrame]];
-//}
 
 
 @end

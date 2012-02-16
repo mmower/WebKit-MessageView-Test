@@ -55,7 +55,6 @@
 		C9FA726F14E9BB8800F8F872 = {
 			isa = PBXGroup;
 			children = (
-				C9FA729B14E9BC3400F8F872 /* WebKit.framework */,
 				C9FA728414E9BB8800F8F872 /* MessageViewTest */,
 				C9FA727D14E9BB8800F8F872 /* Frameworks */,
 				C9FA727B14E9BB8800F8F872 /* Products */,
@@ -73,6 +72,7 @@
 		C9FA727D14E9BB8800F8F872 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9FA729B14E9BC3400F8F872 /* WebKit.framework */,
 				C9FA727E14E9BB8800F8F872 /* Cocoa.framework */,
 				C9FA728014E9BB8800F8F872 /* Other Frameworks */,
 			);

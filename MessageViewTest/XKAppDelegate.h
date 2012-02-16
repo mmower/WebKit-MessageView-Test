@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @interface XKAppDelegate : NSObject <NSApplicationDelegate> {
+  NSArray *_data;
   NSInteger _previousSelectedRow;
 }
 
