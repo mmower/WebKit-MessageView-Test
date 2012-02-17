@@ -10,6 +10,8 @@
 
 #import <WebKit/WebKit.h>
 
+#import "XKAppDelegate.h"
+
 @interface XKMessageView ()
 @end
 
@@ -19,11 +21,17 @@
 @synthesize controlView = _controlView;
 @synthesize webView = _webView;
 @synthesize desiredHeight = _desiredHeight;
+@synthesize delegate = _delegate;
 
 
 - (void)awakeFromNib {
   [[self webView] setFrameLoadDelegate:self];
   [[[[self webView] mainFrame] frameView] setAllowsScrolling:NO];
+}
+
+
+- (NSString *)lookupKey {
+  return [NSString stringWithFormat:@"%p",self];
 }
 
 
@@ -36,7 +44,7 @@
 
 - (void)updateDesiredHeightOfWebViewNotifyingTable {
   [self updateDesiredHeightOfWebView];
-  
+  [[self delegate] tableRowView:self hasDesiredHeight:[self desiredHeight]];
 }
 
 

@@ -15,6 +15,10 @@
 @property (assign) IBOutlet NSView *controlView;
 @property (assign) IBOutlet WebView *webView;
 @property (assign) CGFloat desiredHeight;
+@property (weak) id delegate;
+
+
+- (NSString *)lookupKey;
 
 - (void)updateDesiredHeightOfWebViewNotifyingTable;
 - (void)updateDesiredHeightOfWebView;

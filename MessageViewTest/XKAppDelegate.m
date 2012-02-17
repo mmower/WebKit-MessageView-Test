@@ -37,7 +37,12 @@
   }
   _data = list;
   
-  [self performSelector:@selector(resampleAllTableRowHeights) withObject:nil afterDelay:0.1];
+  NSNumber *defaultRowHeightValue = [NSNumber numberWithInteger:128];
+  _rowHeightCache = [NSMutableDictionary dictionaryWithCapacity:[_data count]];
+  for( NSInteger row = 0; row <= [_data count]; row += 1 ) {
+    [_rowHeightCache setObject:defaultRowHeightValue forKey:[NSNumber numberWithInteger:row]];
+  }
+//  [self performSelector:@selector(resampleAllTableRowHeights) withObject:nil afterDelay:0.1];
 }
 
 
@@ -53,8 +58,16 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
   XKMessageView *view = [tableView makeViewWithIdentifier:@"MessageCell" owner:self];
+  [view setDelegate:self];
   [[[view webView] mainFrame] loadHTMLString:[_data objectAtIndex:row] baseURL:[NSURL URLWithString:@"http://127.0.0.1/"]];
   return view;
+}
+
+
+- (void)tableRowView:(XKMessageView *)view hasDesiredHeight:(NSInteger)height {
+  NSInteger row = [[self tableView] rowForView:view];
+  [_rowHeightCache setObject:[NSNumber numberWithInteger:height] forKey:[NSNumber numberWithInteger:row]];
+  [[self tableView] noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
 }
 
 
@@ -73,17 +86,25 @@
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
   CGFloat height = 128.0;
   
-//  if( row == [tableView selectedRow] ) {
-    XKMessageView *messageView = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
-    if( messageView ) {
-      height = MAX( height, [messageView desiredHeight] );
-    } else {
-      
-//      NSLog( @"no message view for row %ld", row );
-//    }
+  NSNumber *rowHeightValue = [_rowHeightCache objectForKey:[NSNumber numberWithInteger:row]];
+  if( rowHeightValue ) {
+    height = [rowHeightValue integerValue];
+  } else {
+    NSLog( @"No cached row height for row: %ld", row );
   }
   
-  NSLog( @"Height of row %ld = %g", row, height );
+  
+//  if( row == [tableView selectedRow] ) {
+//    XKMessageView *messageView = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
+//    if( messageView ) {
+//      height = MAX( height, [messageView desiredHeight] );
+//    } else {
+//      
+//      NSLog( @"no message view for row %ld", row );
+//    }
+//  }
+  
+//  NSLog( @"Height of row %ld = %g", row, height );
   
   return height;
 }
