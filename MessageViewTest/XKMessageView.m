@@ -29,8 +29,14 @@
 
 - (void)webView:(WebView *)webView didFinishLoadForFrame:(WebFrame *)webFrame {
   if( webFrame == [[self webView] mainFrame] ) {
-    [self updateDesiredHeightOfWebView];
+    [self updateDesiredHeightOfWebViewNotifyingTable];
   }
+}
+
+
+- (void)updateDesiredHeightOfWebViewNotifyingTable {
+  [self updateDesiredHeightOfWebView];
+  
 }
 
 
@@ -39,12 +45,12 @@
   DOMDocument *document = [mainFrame DOMDocument];
   
   DOMElement *container = [document getElementById:@"container"];
-  assert( container );
-  
-  CGFloat contentHeight = [container offsetHeight] + 32;
-  NSLog( @"contentHeight = %g", contentHeight );
-  
-  [self setDesiredHeight:contentHeight+NSHeight( [[self controlView] frame] )];
+  if( container ) {
+    CGFloat contentHeight = [container offsetHeight] + 32;
+    NSLog( @"contentHeight = %g", contentHeight );
+    
+    [self setDesiredHeight:contentHeight+NSHeight( [[self controlView] frame] )];
+  }
 }
 
 

@@ -16,6 +16,7 @@
 @property (assign) IBOutlet WebView *webView;
 @property (assign) CGFloat desiredHeight;
 
+- (void)updateDesiredHeightOfWebViewNotifyingTable;
 - (void)updateDesiredHeightOfWebView;
 
 @end

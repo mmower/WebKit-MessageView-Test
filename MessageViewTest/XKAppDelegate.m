@@ -37,7 +37,7 @@
   }
   _data = list;
   
-  [self performSelector:@selector(revalidateTableRowHeights) withObject:nil afterDelay:0];
+  [self performSelector:@selector(resampleAllTableRowHeights) withObject:nil afterDelay:0.1];
 }
 
 
@@ -73,13 +73,14 @@
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
   CGFloat height = 128.0;
   
-  if( row == [tableView selectedRow] ) {
+//  if( row == [tableView selectedRow] ) {
     XKMessageView *messageView = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
     if( messageView ) {
       height = MAX( height, [messageView desiredHeight] );
     } else {
+      
 //      NSLog( @"no message view for row %ld", row );
-    }
+//    }
   }
   
   NSLog( @"Height of row %ld = %g", row, height );
@@ -89,15 +90,7 @@
 
 
 - (void)windowResized:(NSNotification *)notification {
-  [self revalidateTableRowHeights];
-//  NSMutableIndexSet *updatedIndices = [NSMutableIndexSet indexSet];
-//  [[self tableView] enumerateAvailableRowViewsUsingBlock:^(NSTableRowView *rowView, NSInteger row) {
-//    XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:row makeIfNecessary:NO];
-//    [messageView updateDesiredHeightOfWebView];
-//    [updatedIndices addIndex:row];
-//  }];
-//  [[self tableView] noteHeightOfRowsWithIndexesChanged:updatedIndices];
-//  
+  [self resampleVisibleTableRowHeights];
 //  if( [[self tableView] selectedRow] >= 0 ) {
 //    if( [notification object] == [self window] ) {
 //      XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:[[self tableView] selectedRow] makeIfNecessary:NO];
@@ -107,13 +100,23 @@
 }
 
 
-- (void)revalidateTableRowHeights {
+- (void)resampleAllTableRowHeights {
+  for( NSInteger row = 0; row < [_data count]; row += 1 ) {
+    XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:row makeIfNecessary:NO];
+    [messageView updateDesiredHeightOfWebView];
+  }
+  [[self tableView] noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [_data count])]];
+}
+
+
+- (void)resampleVisibleTableRowHeights {
   NSMutableIndexSet *updatedIndices = [NSMutableIndexSet indexSet];
   [[self tableView] enumerateAvailableRowViewsUsingBlock:^(NSTableRowView *rowView, NSInteger row) {
     XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:row makeIfNecessary:NO];
     [messageView updateDesiredHeightOfWebView];
     [updatedIndices addIndex:row];
   }];
+  NSLog( @"Updating indexes = %@", updatedIndices );
   [[self tableView] noteHeightOfRowsWithIndexesChanged:updatedIndices];
 }
 
