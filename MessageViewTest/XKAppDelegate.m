@@ -25,7 +25,11 @@
   
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowResized:) name:NSWindowDidResizeNotification object:[self window]];
   
+  
+//  NSArray *constraints = [[self tableView] constraintsAffectingLayoutForOrientation:NSLayoutConstraintOrientationHorizontal];
+//  [[self window] visualizeConstraints:constraints];
 }
+
 
 - (void)awakeFromNib {
   _tableLock = NO;
@@ -33,7 +37,7 @@
   NSMutableArray *list = [NSMutableArray array];
   for( int i = 0; i < 100; i++ ) {
     NSInteger paras = 1 + random() % 32;
-    NSMutableString *markup = [NSMutableString stringWithFormat:@"<html>\n<head>\n<style>\nbody { background: blue; };\n#container { background: red; };\n</style>\n</head>\n<body><div id='container'>\n<h1>Row %d, Paras = %ld</h1>\n",i,paras];
+    NSMutableString *markup = [NSMutableString stringWithFormat:@"<html>\n<head>\n<style>\nbody { xbackground: blue; };\n#container { xbackground: red; };\n</style>\n</head>\n<body><div id='container'>\n<h1>Row %d, Paras = %ld</h1>\n",i,paras];
     while( paras-- > 0 ) {
       [markup appendFormat:@"<p>Hello from para %ld</p>\n",paras];
     }
@@ -76,9 +80,10 @@
   NSLog( @"View for row %3ld has desired height = %g", row, height );
   [_rowHeightCache setObject:[NSNumber numberWithDouble:height] forKey:[NSNumber numberWithInteger:row]];
   if( !_tableLock ) {
+    [NSAnimationContext beginGrouping];
+    [[NSAnimationContext currentContext] setDuration:0.0];
     [[self tableView] noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
-  } else {
-    NSLog( @"TABLE LOCKED" );
+    [NSAnimationContext endGrouping];
   }
 }
 
@@ -97,12 +102,10 @@
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
   CGFloat height = 128.0;
-  
   NSNumber *rowHeightValue = [_rowHeightCache objectForKey:[NSNumber numberWithInteger:row]];
   if( rowHeightValue ) {
     height = [rowHeightValue doubleValue];
   }
-  NSLog( @"Returning row height %g for row %3ld", height, row );
   return height;
 }
 
@@ -121,7 +124,11 @@
     [updatedIndices addIndex:row];
   }];
   _tableLock = NO;
+  
+  [NSAnimationContext beginGrouping];
+  [[NSAnimationContext currentContext] setDuration:0.0];
   [[self tableView] noteHeightOfRowsWithIndexesChanged:updatedIndices];
+  [NSAnimationContext endGrouping];
 }
 
 
