@@ -42,7 +42,6 @@
   for( NSInteger row = 0; row <= [_data count]; row += 1 ) {
     [_rowHeightCache setObject:defaultRowHeightValue forKey:[NSNumber numberWithInteger:row]];
   }
-//  [self performSelector:@selector(resampleAllTableRowHeights) withObject:nil afterDelay:0.1];
 }
 
 
@@ -64,9 +63,9 @@
 }
 
 
-- (void)tableRowView:(XKMessageView *)view hasDesiredHeight:(NSInteger)height {
+- (void)tableRowView:(XKMessageView *)view hasDesiredHeight:(CGFloat)height {
   NSInteger row = [[self tableView] rowForView:view];
-  [_rowHeightCache setObject:[NSNumber numberWithInteger:height] forKey:[NSNumber numberWithInteger:row]];
+  [_rowHeightCache setObject:[NSNumber numberWithDouble:height] forKey:[NSNumber numberWithInteger:row]];
   [[self tableView] noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
 }
 
@@ -88,7 +87,7 @@
   
   NSNumber *rowHeightValue = [_rowHeightCache objectForKey:[NSNumber numberWithInteger:row]];
   if( rowHeightValue ) {
-    height = [rowHeightValue integerValue];
+    height = [rowHeightValue doubleValue];
   } else {
     NSLog( @"No cached row height for row: %ld", row );
   }
@@ -121,20 +120,11 @@
 }
 
 
-- (void)resampleAllTableRowHeights {
-  for( NSInteger row = 0; row < [_data count]; row += 1 ) {
-    XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:row makeIfNecessary:NO];
-    [messageView updateDesiredHeightOfWebView];
-  }
-  [[self tableView] noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [_data count])]];
-}
-
-
 - (void)resampleVisibleTableRowHeights {
   NSMutableIndexSet *updatedIndices = [NSMutableIndexSet indexSet];
   [[self tableView] enumerateAvailableRowViewsUsingBlock:^(NSTableRowView *rowView, NSInteger row) {
     XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:row makeIfNecessary:NO];
-    [messageView updateDesiredHeightOfWebView];
+    [messageView updateDesiredHeightOfWebViewNotifyingTable];
     [updatedIndices addIndex:row];
   }];
   NSLog( @"Updating indexes = %@", updatedIndices );

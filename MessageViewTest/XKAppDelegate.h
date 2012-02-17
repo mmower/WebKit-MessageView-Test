@@ -20,7 +20,7 @@
 
 @property (assign) IBOutlet NSTableView *tableView;
 
-- (void)tableRowView:(XKMessageView *)view hasDesiredHeight:(NSInteger)height;
+- (void)tableRowView:(XKMessageView *)view hasDesiredHeight:(CGFloat)height;
 
 
 @end
