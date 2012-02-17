@@ -9,6 +9,7 @@
 #import "XKAppDelegate.h"
 
 #import "XKMessageView.h"
+#import "XKInfoPopoverViewController.h"
 
 #import <WebKit/WebKit.h>
 
@@ -16,6 +17,8 @@
 
 @synthesize window = _window;
 @synthesize tableView = _tableView;
+@synthesize infoPopover = _infoPopover;
+@synthesize infoPopoverViewController = _infoPopoverViewController;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
   
@@ -25,10 +28,12 @@
 }
 
 - (void)awakeFromNib {
+  _tableLock = NO;
+  
   NSMutableArray *list = [NSMutableArray array];
   for( int i = 0; i < 100; i++ ) {
     NSInteger paras = 1 + random() % 32;
-    NSMutableString *markup = [NSMutableString stringWithFormat:@"<html>\n<body><div id='container'>\n<h1>Row %d, Paras = %ld</h1>\n",i,paras];
+    NSMutableString *markup = [NSMutableString stringWithFormat:@"<html>\n<head>\n<style>\nbody { background: blue; };\n#container { background: red; };\n</style>\n</head>\n<body><div id='container'>\n<h1>Row %d, Paras = %ld</h1>\n",i,paras];
     while( paras-- > 0 ) {
       [markup appendFormat:@"<p>Hello from para %ld</p>\n",paras];
     }
@@ -36,6 +41,9 @@
     [list addObject:markup];
   }
   _data = list;
+  
+  [[self tableView] setGridStyleMask:NSTableViewSolidHorizontalGridLineMask];
+  [[self tableView] setSelectionHighlightStyle:NSTableViewSelectionHighlightStyleNone];
   
   NSNumber *defaultRowHeightValue = [NSNumber numberWithInteger:128];
   _rowHeightCache = [NSMutableDictionary dictionaryWithCapacity:[_data count]];
@@ -65,8 +73,13 @@
 
 - (void)tableRowView:(XKMessageView *)view hasDesiredHeight:(CGFloat)height {
   NSInteger row = [[self tableView] rowForView:view];
+  NSLog( @"View for row %3ld has desired height = %g", row, height );
   [_rowHeightCache setObject:[NSNumber numberWithDouble:height] forKey:[NSNumber numberWithInteger:row]];
-  [[self tableView] noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
+  if( !_tableLock ) {
+    [[self tableView] noteHeightOfRowsWithIndexesChanged:[NSIndexSet indexSetWithIndex:row]];
+  } else {
+    NSLog( @"TABLE LOCKED" );
+  }
 }
 
 
@@ -88,49 +101,35 @@
   NSNumber *rowHeightValue = [_rowHeightCache objectForKey:[NSNumber numberWithInteger:row]];
   if( rowHeightValue ) {
     height = [rowHeightValue doubleValue];
-  } else {
-    NSLog( @"No cached row height for row: %ld", row );
   }
-  
-  
-//  if( row == [tableView selectedRow] ) {
-//    XKMessageView *messageView = [tableView viewAtColumn:0 row:row makeIfNecessary:NO];
-//    if( messageView ) {
-//      height = MAX( height, [messageView desiredHeight] );
-//    } else {
-//      
-//      NSLog( @"no message view for row %ld", row );
-//    }
-//  }
-  
-//  NSLog( @"Height of row %ld = %g", row, height );
-  
+  NSLog( @"Returning row height %g for row %3ld", height, row );
   return height;
 }
 
 
 - (void)windowResized:(NSNotification *)notification {
   [self resampleVisibleTableRowHeights];
-//  if( [[self tableView] selectedRow] >= 0 ) {
-//    if( [notification object] == [self window] ) {
-//      XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:[[self tableView] selectedRow] makeIfNecessary:NO];
-//      [messageView updateDesiredHeightOfWebView];
-//    }
-//  }
 }
 
 
 - (void)resampleVisibleTableRowHeights {
   NSMutableIndexSet *updatedIndices = [NSMutableIndexSet indexSet];
+  _tableLock = YES;
   [[self tableView] enumerateAvailableRowViewsUsingBlock:^(NSTableRowView *rowView, NSInteger row) {
-    XKMessageView *messageView = [[self tableView] viewAtColumn:0 row:row makeIfNecessary:NO];
+    XKMessageView *messageView = [rowView viewAtColumn:0];
     [messageView updateDesiredHeightOfWebViewNotifyingTable];
     [updatedIndices addIndex:row];
   }];
-  NSLog( @"Updating indexes = %@", updatedIndices );
+  _tableLock = NO;
   [[self tableView] noteHeightOfRowsWithIndexesChanged:updatedIndices];
 }
 
+
+- (IBAction)clicked:(id)sender {
+  XKMessageView *view = (XKMessageView *)[[sender superview] superview];
+  [[[self infoPopoverViewController] heightField] setStringValue:[NSString stringWithFormat:@"%g", [view desiredHeight]]];
+  [[self infoPopover] showRelativeToRect:[view bounds] ofView:view preferredEdge:NSMaxXEdge];
+}
 
 
 @end

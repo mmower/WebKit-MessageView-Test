@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C956F0CF14EACD4D00D1F4B0 /* XKTableRowView.m in Sources */ = {isa = PBXBuildFile; fileRef = C956F0CE14EACD4D00D1F4B0 /* XKTableRowView.m */; };
+		C9D49AB014EE9B6A008D58A7 /* XKInfoPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9D49AAF14EE9B6A008D58A7 /* XKInfoPopoverViewController.m */; };
 		C9FA727F14E9BB8800F8F872 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9FA727E14E9BB8800F8F872 /* Cocoa.framework */; };
 		C9FA728914E9BB8800F8F872 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C9FA728714E9BB8800F8F872 /* InfoPlist.strings */; };
 		C9FA728B14E9BB8800F8F872 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FA728A14E9BB8800F8F872 /* main.m */; };
@@ -21,6 +22,8 @@
 /* Begin PBXFileReference section */
 		C956F0CD14EACD4D00D1F4B0 /* XKTableRowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKTableRowView.h; sourceTree = "<group>"; };
 		C956F0CE14EACD4D00D1F4B0 /* XKTableRowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKTableRowView.m; sourceTree = "<group>"; };
+		C9D49AAE14EE9B6A008D58A7 /* XKInfoPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XKInfoPopoverViewController.h; sourceTree = "<group>"; };
+		C9D49AAF14EE9B6A008D58A7 /* XKInfoPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XKInfoPopoverViewController.m; sourceTree = "<group>"; };
 		C9FA727A14E9BB8800F8F872 /* MessageViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MessageViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FA727E14E9BB8800F8F872 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C9FA728114E9BB8800F8F872 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -100,6 +103,8 @@
 				C9FA729E14E9BC8D00F8F872 /* XKMessageView.m */,
 				C956F0CD14EACD4D00D1F4B0 /* XKTableRowView.h */,
 				C956F0CE14EACD4D00D1F4B0 /* XKTableRowView.m */,
+				C9D49AAE14EE9B6A008D58A7 /* XKInfoPopoverViewController.h */,
+				C9D49AAF14EE9B6A008D58A7 /* XKInfoPopoverViewController.m */,
 			);
 			path = MessageViewTest;
 			sourceTree = "<group>";
@@ -142,7 +147,7 @@
 		C9FA727114E9BB8800F8F872 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 			};
 			buildConfigurationList = C9FA727414E9BB8800F8F872 /* Build configuration list for PBXProject "MessageViewTest" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -183,6 +188,7 @@
 				C9FA729214E9BB8800F8F872 /* XKAppDelegate.m in Sources */,
 				C9FA729F14E9BC8D00F8F872 /* XKMessageView.m in Sources */,
 				C956F0CF14EACD4D00D1F4B0 /* XKTableRowView.m in Sources */,
+				C9D49AB014EE9B6A008D58A7 /* XKInfoPopoverViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

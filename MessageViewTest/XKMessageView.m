@@ -55,7 +55,7 @@
   DOMElement *container = [document getElementById:@"container"];
   if( container ) {
     CGFloat contentHeight = [container offsetHeight] + 32;
-    NSLog( @"contentHeight = %g", contentHeight );
+//    NSLog( @"contentHeight = %g", contentHeight );
     
     [self setDesiredHeight:contentHeight+NSHeight( [[self controlView] frame] )];
   }
